@@ -1,0 +1,25 @@
+<navbar></navbar>
+
+<div class="container">
+	<table width="100%"><tr><td width="50%" style="padding: 3px;" valign="top">
+	  <b>New Question</b><br /><br />
+	  <form name="newQuestionForm" ng-submit="newQuestion(newQuestionForm)" novalidate>
+	  	<div class="col-xs-10"><input type="text" ng-model="newQQ" name="question" id="question" class="form-control input-sm"></div><br /><br />
+	  	<div class="col-xs-10"><input type="text" ng-model="newQA" name="answer" id="answer" class="form-control input-sm"></div>
+        <br /><br /><div style="padding-left: 15px;"><button class="btn btn-inverse btn-sm btn-login" type="submit">
+          Save
+        </button><font color="green" size='-1'>{{qCreated}}</font></div>
+	  </form>
+	</td><td width="50%" style="padding: 3px;" valign="top">
+	  <b>Current set of questions</b><br /><br />
+	  <ul class="list-group">
+	    <li class="list-group-item" ng-repeat="question in questions">
+	        <a ng-click="delete(question._id)"><span class="glyphicon glyphicon-trash pull-right"></span></a>
+	        <div class='ne_{{question._id}}'><strong>{{question.question}}</strong><br><div class='ne_{{question._id}} ne'><a ng-click="edit(question._id)"><span class="glyphicon glyphicon-pencil pull-right"></span></a></div>
+	        <span class="text-muted">{{question.answer}}</span></div>
+	        <div class='ye_{{question._id}}' style="display:none"><div class="col-xs-7"><input type="text" ng-model='question.newQ' class="form-control input-sm"><div style="padding-top: 4px;"><input type="text" ng-model='question.newA' class="form-control input-sm"></div></div><br /><div class='ye_{{question._id}}' style="display:none"><a ng-click="save(question._id)"><span class="glyphicon glyphicon-ok pull-right"></span></a></div><br /><div class='ye_{{question._id}}' style="display:none"><a ng-click="cancel(question._id)"><span class="glyphicon glyphicon-remove pull-right"></span></a></div><br />
+	        </div>
+	    </li>
+	  </ul>
+	</td></tr></table>
+</div>
