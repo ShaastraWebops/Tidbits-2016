@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('tidbitsApp')
-  .controller('SignupCtrl', function($scope, Auth, $location) {
+  .controller('SignupCtrl', function ($scope, Auth, $location) {
     $scope.user = {};
     $scope.errors = {};
 
@@ -12,6 +12,7 @@ angular.module('tidbitsApp')
         Auth.createUser({
           name: $scope.user.name,
           email: $scope.user.email,
+          phoneNumber: $scope.user.phoneNumber,
           password: $scope.user.password
         })
         .then(function() {

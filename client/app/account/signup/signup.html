@@ -37,6 +37,24 @@
           </p>
         </div>
 
+        <div class="form-group" ng-class="{ 'has-success': form.phoneNumber.$valid && submitted,
+                                            'has-error': form.phoneNumber.$invalid && submitted }">
+          <label>Phone Number</label>
+
+          <input type="text" name="phoneNumber" class="form-control" ng-model="user.phoneNumber"
+                 ng-pattern="/^\d{10}$/"
+                 required
+                 mongoose-error/>
+          <span class="help-block">Do not include 0 or +91 before your 10 digit number</span>
+          <span class="help-block" 
+             ng-show="(form.phoneNumber.$error.pattern || form.phoneNumber.$error.required) && submitted">
+            Phone Number must be of 10 digits
+          </span>
+          <span class="help-block" ng-show="form.phoneNumber.$error.mongoose">
+            {{ errors.phoneNumber }}
+          </span>          
+        </div>
+        
         <div class="form-group" ng-class="{ 'has-success': form.password.$valid && submitted,
                                             'has-error': form.password.$invalid && submitted }">
           <label>Password</label>

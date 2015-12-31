@@ -18,7 +18,7 @@ var UserSchema = new Schema({
   provider: String,
   solved: [{ type: Schema.Types.ObjectId, ref: 'Question' }],
   lastSolvedAt: { type: Date },
-  phoneNumber: String,
+  phoneNumber: { type: String, default: '' },
   numSolved: { type: Number, default: 0 },
   salt: String
 });
@@ -57,6 +57,14 @@ UserSchema
   .validate(function(email) {
     return email.length;
   }, 'Email cannot be blank');
+
+// Validate phoneNumber
+UserSchema
+  .path('phoneNumber')
+  .validate(function(phoneNumber) {
+    var regExpPhone = /^\d{10}$/;
+    return (regExpPhone.test(phoneNumber));
+  }, 'Phone Number must have 10 digits');
 
 // Validate empty password
 UserSchema
