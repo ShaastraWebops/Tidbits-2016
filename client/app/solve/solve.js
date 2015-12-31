@@ -5,6 +5,7 @@ angular.module('tidbitsApp')
     $routeProvider
       .when('/solve', {
         templateUrl: 'app/solve/solve.html',
-        controller: 'SolveCtrl'
+        controller: 'SolveCtrl',
+        authenticate: true
       });
   });

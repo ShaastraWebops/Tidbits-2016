@@ -11,6 +11,7 @@
     </div>
     <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
       <ul class="nav navbar-nav">
+        <li ng-class="{active: isActive('/scoreboard')}"><a href="/scoreboard">Scoreboard</a></li>
         <li ng-show="isLoggedIn()" ng-repeat="item in menu" ng-class="{active: isActive(item.link)}">
             <a ng-href="{{item.link}}">{{item.title}}</a>
         </li>

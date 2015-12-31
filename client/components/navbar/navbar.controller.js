@@ -3,9 +3,6 @@
 angular.module('tidbitsApp')
   .controller('NavbarCtrl', function ($scope, $location, Auth) {
     $scope.menu = [{
-      'title': 'Scoreboard',
-      'link': '/scoreboard'
-    },{
       'title': 'Solve Questions',
       'link': '/solve'
     }];

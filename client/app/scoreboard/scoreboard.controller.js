@@ -6,11 +6,17 @@ function ScoreboardController($scope, $http, Auth) {
   	$scope.users=res.data;
   });
 
-  $scope.currUser = Auth.getCurrentUser();
-  $http.get('/api/users/currUserPosition/').then(function (res) {
-    console.log(res);
-    $scope.currUserPosition = res.data;
+  $scope.loggedIn = false;
+  Auth.isLoggedIn(function (loggedIn) {
+  	if(loggedIn) {
+  		$scope.loggedIn = true;
+		  $scope.currUser = Auth.getCurrentUser();
+		  $http.get('/api/users/currUserPosition/').then(function (res) {
+		    $scope.currUserPosition = res.data;
+		  });
+  	}
   });
+
 }
 
 angular.module('tidbitsApp')
