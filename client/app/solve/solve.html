@@ -1,24 +1,35 @@
 <navbar></navbar>
+
 <div class="container">
-<b>Solved Questions:</b>
-<ul class="list-group">
-<li class="list-group-item" ng-repeat="question in solvedQuestions">
-    <b>{{question.question}}</b><br />
-    {{question.answer}}
-</li>
-</ul>
-<br />	<font color="red"><b>{{wrong}}</font>
+	
+	<div class='nq'>
+		<b>Next Question:<br /></b>
+		<div style="margin-left: 30px">
+			<div v-html="input | marked" ng-bind-html="xmark(nextQuestion)"></div>
+			<br />
+			<div class="col-xs-7">
+				<input type="text" ng-model="answer" class="form-control input-sm">
+			</div>
+			<button class="btn btn-inverse btn-sm btn-login" type="submit" ng-click="subAns()">Submit answer</button>
+		</div>
+	</div>
+	<br />	
+	<font color="red"><b>{{wrong}}</font>
 	<font color="green">{{correct}}</b></font><br />
-<div class='nq'>
-<b>Next Question:<br /></b>
-<div style="margin-left: 30px">
-	<h3>{{nextQuestion}}</h3>
-	<br /><div class="col-xs-7"><input type="text" ng-model="answer" class="form-control input-sm"></div>
-	<button class="btn btn-inverse btn-sm btn-login" type="submit" ng-click="subAns()">Submit answer</button>
+
+	<div class="nnq" style="display: none;">
+		<h3>All questions solved!</h3>
+	</div>
+
+	<b>Solved Questions:</b>
+	<ul class="list-group">
+		<li class="list-group-item" ng-repeat="question in solvedQuestions">
+    	<span><b>Question - </b></span><span v-html="input | marked" ng-bind-html="xmark(question.question)"></span><br />
+    	<b>Answer - </b>{{question.answer}}
+		</li>
+	</ul>
+
 
 </div>
-</div>
-<div class="nnq" style="display: none;">
-	<h3>All questions solved!</h3>
-</div>
+
 <footer></footer>

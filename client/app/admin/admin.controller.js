@@ -1,5 +1,11 @@
 angular.module('tidbitsApp')
-  .controller('AdminCtrl', function($scope, $http) {
+  .controller('AdminCtrl', function ($scope, $http) {
+
+    var converter = new showdown.Converter();
+    $scope.xmark = function (b) {
+      return converter.makeHtml(b);
+    };
+
   	$scope.reload=function() {
   	  $http.get('/api/questions').then(function(res) {
   	    $scope.questions=res.data;
@@ -9,7 +15,8 @@ angular.module('tidbitsApp')
   	var hasChanged="There are unsaved changes. Please click the 'Save' button to save them before proceeding.";
   	$scope.savedText="";
   	$scope.thereChange="";
-  	$scope.newQQ=""; $scope.newQA="";
+  	$scope.newQQ=""; 
+    $scope.newQA="";
   	$scope.newQuestion=function(form) {
   	  if(form.$valid) {
   	  	console.log({

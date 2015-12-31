@@ -1,1 +1,14 @@
 .trash { color:rgb(209, 91, 71); }
+
+.question {
+  border: none;
+  border-right: 1px solid #ccc;
+  outline: none;
+  background-color: #f6f6f6;
+  font-size: 14px;
+  height: 100%;	
+}
+
+.list-group-item {
+	position: static;
+}

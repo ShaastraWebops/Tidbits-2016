@@ -2,6 +2,12 @@
 
 angular.module('tidbitsApp')
   .controller('SolveCtrl', function ($scope, $http) {
+
+    var converter = new showdown.Converter();
+    $scope.xmark = function (b) {
+      return converter.makeHtml(b);
+    };
+
   	$scope.refresh=function() {
 	  	$http.get('/api/users/me').then(function(res) {
 	  		console.log(res.data);
