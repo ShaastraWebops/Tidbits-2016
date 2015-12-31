@@ -5,6 +5,7 @@ angular.module('tidbitsApp')
     $routeProvider
       .when('/admin', {
         templateUrl: 'app/admin/admin.html',
-        controller: 'AdminCtrl'
+        controller: 'AdminCtrl',
+        access: { 'allow': 'admin' }
       });
   });

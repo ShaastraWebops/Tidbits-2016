@@ -141,6 +141,15 @@ exports.scoreboard = function(req, gres) {
   });
 };
 
+exports.adminScoreboard = function(req, gres) {
+  User.find({}, 'name _id numSolved lastSolvedAt email phoneNumber')
+  .sort({numSolved:-1, lastSolvedAt:1})
+  .limit(20)
+  .exec(function (err, res) {
+    gres.status(200).send(res);
+  });
+};
+
 exports.getUserPosition = function (req, gres) {
   User.find({}, 'name _id numSolved lastSolvedAt')
   .sort({numSolved:-1, lastSolvedAt:1})
