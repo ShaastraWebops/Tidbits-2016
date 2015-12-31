@@ -30,6 +30,7 @@ exports.verify = function(req, res) {
       if(q.answer.toLowerCase()==req.body.answer.toLowerCase()) {
         if(user.solved.indexOf(req.params.id)==-1) {
           var updated = _.assign(user, {solved: user.solved.concat(req.params.id), numSolved: user.numSolved+1});
+          updated.lastSolvedAt = Date.now();
           updated.save(function (err) {
             if (err) { return handleError(res, err); }
             return;
