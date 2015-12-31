@@ -57,6 +57,19 @@ angular.module('tidbitsApp', [
             event.preventDefault();
             $location.path('/login');
           }
+          if (next.access) {
+            var permissions = next.access;
+            var userRole = Auth.getCurrentUser().role;
+            if (permissions.except) {
+              if (permissions.except.indexOf(userRole) > -1) {
+                $location.url('/');
+              }
+            } else if (permissions.allow) {
+              if (permissions.allow.indexOf(userRole) < 0) {
+                $location.url('/');
+              }
+            }
+          }        
         });
       }
     });

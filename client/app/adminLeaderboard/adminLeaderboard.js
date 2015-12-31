@@ -5,6 +5,8 @@ angular.module('tidbitsApp')
     $routeProvider
       .when('/adminLeaderboard', {
         templateUrl: 'app/adminLeaderboard/adminLeaderboard.html',
-        controller: 'AdminLeaderboardCtrl'
+        controller: 'AdminLeaderboardCtrl',
+        authenticate: true,
+        access: { 'allow': 'admin' }
       });
   });

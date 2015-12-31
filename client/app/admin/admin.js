@@ -6,6 +6,7 @@ angular.module('tidbitsApp')
       .when('/admin', {
         templateUrl: 'app/admin/admin.html',
         controller: 'AdminCtrl',
+        authenticate: true,
         access: { 'allow': 'admin' }
       });
   });
