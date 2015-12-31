@@ -1,12 +1,46 @@
 <navbar></navbar>
 <div class="container">
-<div class="col-xs-4">
-<h3>Scoreboard</h3>
-<ul class="list-group" width="30%">
-<li class="list-group-item" ng-repeat="user in users">
-  <p class="pull-right">{{user.numSolved}}</p><p>{{user.name}}</p>
-</li>
-</ul>
-</div>
+	<div class="col-xs-6">
+		<h3>Leaderboard</h3>
+		<table class="table table-bordered table-hover">
+			<thead>
+				<tr>
+					<th>Position</th>
+					<th>Name</th>
+					<th>Solved questions</th>
+					<th>Time</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="user in users track by $index">
+					<td>{{ $index+1 }}</td>
+					<td>{{ user.name }}</td>
+					<td>{{ user.numSolved }}</td>
+					<td>{{ user.lastSolvedAt | date: 'medium' }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="col-xs-6">
+		<h3>Your Position</h3>
+		<table class="table table-bordered table-hover">
+			<thead>
+				<tr>
+					<th>Position</th>
+					<th>Name</th>
+					<th>Solved questions</th>
+					<th>Time</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{ currUserPosition }}</td>
+					<td>{{ currUser.name }}</td>
+					<td>{{ currUser.numSolved }}</td>
+					<td>{{ currUser.lastSolvedAt | date: 'medium' }}</td>
+				</tr>
+			</tbody>
+		</table>		
+	</div>
 </div>
 <footer></footer>

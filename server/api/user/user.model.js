@@ -18,6 +18,7 @@ var UserSchema = new Schema({
   provider: String,
   solved: [{ type: Schema.Types.ObjectId, ref: 'Question' }],
   lastSolvedAt: { type: Date },
+  phoneNumber: String,
   numSolved: { type: Number, default: 0 },
   salt: String
 });

@@ -1,15 +1,15 @@
 'use strict';
 (function() {
 
-function MainController($scope, $http) {
-  /*$http.post('/api/questions/', {
-    question: "How are you?",
-    answer: "Fine"
-  }).then(function(res) {
-    console.log(res);
-  });*/
-  $http.get('/api/users/leaders/').then(function(res) {
+function MainController($scope, $http, Auth) {
+  $http.get('/api/users/leaders/').then(function (res) {
   	$scope.users=res.data;
+  });
+
+  $scope.currUser = Auth.getCurrentUser();
+  $http.get('/api/users/currUserPosition/').then(function (res) {
+    console.log(res);
+    $scope.currUserPosition = res.data;
   });
 }
 

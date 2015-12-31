@@ -133,7 +133,23 @@ exports.authCallback = function(req, res, next) {
 };
 
 exports.scoreboard = function(req, gres) {
-  User.find({}, 'name _id numSolved').sort({numSolved:-1}).exec(function(err, res) {
+  User.find({}, 'name _id numSolved lastSolvedAt')
+  .sort({numSolved:-1, lastSolvedAt:1})
+  .limit(20)
+  .exec(function (err, res) {
     gres.status(200).send(res);
   });
+};
+
+exports.getUserPosition = function (req, gres) {
+  User.find({}, 'name _id numSolved lastSolvedAt')
+  .sort({numSolved:-1, lastSolvedAt:1})
+  .exec(function (err, users) {
+    users.some(function (user, index) {
+      if(user._id.equals(req.user._id)) {
+        console.log(index);
+        gres.status(200).json(index+1);
+      }
+    });
+  });  
 };
