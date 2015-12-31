@@ -9,15 +9,6 @@ angular.module('tidbitsApp', [
   'validation.match'
 ])
   .config(function($routeProvider, $locationProvider, $httpProvider) {
-    $routeProvider
-      .when('/solve', {
-        templateUrl: 'app/solve/solve.html',
-        controller: 'SolveCtrl'
-      })
-      .otherwise({
-        redirectTo: '/'
-      });
-
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
   })
