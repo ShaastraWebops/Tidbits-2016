@@ -12,7 +12,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="user in users track by $index">
+				<tr ng-repeat="user in users track by $index" ng-class="{'success': $index<3}">
 					<td>{{ $index+1 }}</td>
 					<td>{{ user.name }}</td>
 					<td>{{ user.numSolved }}</td>
@@ -33,7 +33,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
+				<tr ng-class="{'success': currUserPosition<=3}">
 					<td>{{ currUserPosition }}</td>
 					<td>{{ currUser.name }}</td>
 					<td>{{ currUser.numSolved }}</td>
