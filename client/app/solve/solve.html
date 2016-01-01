@@ -2,15 +2,15 @@
 
 <div class="container">
 	
-	<div class='nq'>
-		<b>Next Question:<br /></b>
-		<div style="margin-left: 30px">
+	<div class='jumbotron nq'>
+		<h3><u><b>Next Question:</b></u></h3>
+		<div>
 			<div v-html="input | marked" ng-bind-html="xmark(nextQuestion)"></div>
 			<br />
-			<div class="col-xs-7">
+			<div class="col-xs-6">
 				<input type="text" ng-model="answer" class="form-control input-sm">
 			</div>
-			<button class="btn btn-inverse btn-sm btn-login" type="submit" ng-click="subAns()">Submit answer</button>
+			<button class="btn btn-primary btn-sm btn-login" type="submit" ng-click="subAns()">Submit answer</button>
 		</div>
 	</div>
 	<br />	
@@ -21,14 +21,14 @@
 		<h3>All questions solved!</h3>
 	</div>
 
-	<b>Solved Questions:</b>
-	<ul class="list-group">
-		<li class="list-group-item" ng-repeat="question in solvedQuestions">
-    	<span><b>Question - </b></span><span v-html="input | marked" ng-bind-html="xmark(question.question)"></span><br />
-    	<b>Answer - </b>{{question.answer}}
-		</li>
-	</ul>
-
+	<h2><u><b>Solved Questions:</b></u></h2>
+	<div class="list-group">
+		<a href="" class="list-group-item" ng-repeat="question in solvedQuestions track by $index">
+    	<h4 class="list-group-item-heading"><u><b>Question - {{ $index+1 }}</b></u></h4>
+    	<p><span v-html="input | marked" ng-bind-html="xmark(question.question)"></span></p>
+    	<h4 class="list-group-item-heading"><u><b>Answer - {{ $index+1 }}</b></u></h4>{{question.answer}}
+		</a>
+	</div>
 
 </div>
 

@@ -39,24 +39,24 @@ angular.module('tidbitsApp', [
     };
   })
 
-  .run(function($rootScope, $location, Auth) {
+  .run(function ($rootScope, $location, Auth) {
     // Redirect to login if route requires auth and the user is not logged in
-    $rootScope.$on('$routeChangeStart', function(event, next) {
+    $rootScope.$on('$routeChangeStart', function (event, next) {
       if (next.authenticate) {
-        Auth.isLoggedIn(function(loggedIn) {
-          if (!loggedIn) {
+        Auth.isLoggedIn(function (loggedIn) {
+          if(!loggedIn) {
             event.preventDefault();
             $location.path('/login');
           }
-          if (next.access) {
+          if(next.access) {
             var permissions = next.access;
             var userRole = Auth.getCurrentUser().role;
-            if (permissions.except) {
-              if (permissions.except.indexOf(userRole) > -1) {
+            if(permissions.except) {
+              if(permissions.except.indexOf(userRole) > -1) {
                 $location.url('/');
               }
-            } else if (permissions.allow) {
-              if (permissions.allow.indexOf(userRole) < 0) {
+            } else if(permissions.allow) {
+              if(permissions.allow.indexOf(userRole) < 0) {
                 $location.url('/');
               }
             }
@@ -64,4 +64,5 @@ angular.module('tidbitsApp', [
         });
       }
     });
+    
   });

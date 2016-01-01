@@ -14,6 +14,13 @@ var Answer = require('./answer.model');
 var Question = require('../question/question.model');
 var User = require('../user/user.model');
 
+function handleError(res, statusCode) {
+  statusCode = statusCode || 500;
+  return function(err) {
+    res.status(statusCode).send(err);
+  };
+}
+
 function saveUpdates(updates) {
   return function(entity) {
     var updated = _.merge(entity, updates);
