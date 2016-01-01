@@ -14,7 +14,7 @@ angular.module('tidbitsApp')
 
     currentUser = {};
 
-    if ($cookies.get('token')) {
+    if ($cookies.get('tidbitsToken')) {
       currentUser = User.get();
     }
 
@@ -33,7 +33,7 @@ angular.module('tidbitsApp')
           password: user.password
         })
         .then(function(res) {
-          $cookies.put('token', res.data.token);
+          $cookies.put('tidbitsToken', res.data.tidbitsToken);
           currentUser = User.get();
           return currentUser.$promise;
         })
@@ -52,7 +52,7 @@ angular.module('tidbitsApp')
        * Delete access token and user info
        */
       logout: function() {
-        $cookies.remove('token');
+        $cookies.remove('tidbitsToken');
         currentUser = {};
       },
 
@@ -66,7 +66,7 @@ angular.module('tidbitsApp')
       createUser: function(user, callback) {
         return User.save(user,
           function(data) {
-            $cookies.put('token', data.token);
+            $cookies.put('tidbitsToken', data.tidbitsToken);
             currentUser = User.get();
             return safeCb(callback)(null, user);
           },
@@ -164,7 +164,7 @@ angular.module('tidbitsApp')
        * @return {String} - a token string used for authenticating
        */
       getToken: function() {
-        return $cookies.get('token');
+        return $cookies.get('tidbitsToken');
       }
     };
   });

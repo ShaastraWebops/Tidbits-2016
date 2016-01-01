@@ -18,8 +18,8 @@ angular.module('tidbitsApp', [
       // Add authorization token to headers
       request: function(config) {
         config.headers = config.headers || {};
-        if ($cookies.get('token')) {
-          config.headers.Authorization = 'Bearer ' + $cookies.get('token');
+        if ($cookies.get('tidbitsToken')) {
+          config.headers.Authorization = 'Bearer ' + $cookies.get('tidbitsToken');
         }
         return config;
       },
@@ -29,7 +29,7 @@ angular.module('tidbitsApp', [
         if (response.status === 401) {
           $location.path('/login');
           // remove any stale tokens
-          $cookies.remove('token');
+          $cookies.remove('tidbitsToken');
           return $q.reject(response);
         }
         else {

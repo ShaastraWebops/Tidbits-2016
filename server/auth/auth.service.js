@@ -78,7 +78,7 @@ function setTokenCookie(req, res) {
     return res.status(404).send('Something went wrong, please try again.');
   }
   var token = signToken(req.user._id, req.user.role);
-  res.cookie('token', token);
+  res.cookie('tidbitsToken', token);
   res.redirect('/');
 }
 
