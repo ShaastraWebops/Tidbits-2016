@@ -25,3 +25,15 @@
 .navbar-text {
   margin-left: 15px;
 }
+
+.heading {
+  text-align: center;
+}
+
+.instructions {
+  background-color: #ffffff;
+  padding: 50px 0 50px 0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  border-radius: 2px;
+  width: 75%;
+}
