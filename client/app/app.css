@@ -38,3 +38,19 @@
   padding: 0.2em 0;
 }
 
+@font-face {
+  font-family: 'Feather';
+  src: url('/assets/fonts/Feather.ttf') format("truetype");
+}
+@font-face {
+  font-family: 'Proxima';
+  src: url('/assets/fonts/ProximaNovaRegular.otf') format("opentype");
+}
+@font-face {
+  font-family: 'MyraidPro';
+  src: url('/assets/fonts/MyriadProRegular.otf') format("opentype");
+}
+
+.container {
+  font-family: 'Proxima';
+}
