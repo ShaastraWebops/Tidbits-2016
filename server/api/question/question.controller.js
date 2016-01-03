@@ -142,11 +142,11 @@ exports.destroy = function(req, gres) {
 exports.nextQ = function(req, gres) {
   User.findById(req.user._id).populate('solved', 'next').then(function(res) {
     if(res.solved.length==0) {
-      Question.findOne({}).then(function(actres) {
+      Question.findOne({}, '-answer').then(function(actres) {
         gres.status(200).send(actres);
       });
     } else {
-      Question.findById(res.solved[res.solved.length-1].next).then(function(actres) {
+      Question.findById(res.solved[res.solved.length-1].next).select('-answer').then(function(actres) {
         gres.status(200).send(actres);
       });
     }
