@@ -42,5 +42,10 @@ angular.module('tidbitsApp')
     	  	}
     	  });
   	};
+
+    $scope.showHintsCheck = false;
+    $scope.showHints = function() {
+      $scope.showHintsCheck = true;
+    };
   
   });

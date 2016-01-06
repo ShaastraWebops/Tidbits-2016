@@ -8,9 +8,13 @@
 			<div v-html="input | marked" ng-bind-html="xmark(nextQuestion)"></div>
 			<br />
 			<div ng-if="nextQuestionDisplayHints">
-				<h3><u><b>Hint(s): </b></u></h3>
-				<span class="text-muted"><div v-html="input | marked" ng-bind-html="xmark(nextQuestionHints)"></div></span>
+				<button ng-if="!showHintsCheck" class="btn btn-primary btn-sm btn-login" type="button" ng-click="showHints()">Show Hint(s)</button>
+				<div ng-if="showHintsCheck">
+					<h3><u><b>Hint(s): </b></u></h3>
+					<span class="text-muted"><div v-html="input | marked" ng-bind-html="xmark(nextQuestionHints)"></div></span>
+				</div>
 			</div>
+			<br />
 			<div class="col-xs-6">
 				<input type="text" ng-model="answer" class="form-control input-sm">
 			</div>
