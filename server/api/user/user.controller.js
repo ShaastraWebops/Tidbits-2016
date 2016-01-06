@@ -134,7 +134,7 @@ exports.authCallback = function(req, res, next) {
 
 exports.scoreboard = function(req, gres) {
   User.find({'role':'user'}, 'name _id numSolved lastSolvedAt')
-  .sort({numSolved:-1, lastSolvedAt:1})
+  .sort({numSolved: -1, lastSolvedAt: 1})
   .limit(20)
   .exec(function (err, res) {
     gres.status(200).send(res);
@@ -143,7 +143,7 @@ exports.scoreboard = function(req, gres) {
 
 exports.adminScoreboard = function(req, gres) {
   User.find({'role':'user'}, 'name _id numSolved lastSolvedAt email phoneNumber')
-  .sort({numSolved:-1, lastSolvedAt:1})
+  .sort({numSolved: -1, lastSolvedAt: 1})
   .exec(function (err, res) {
     gres.status(200).send(res);
   });
@@ -151,7 +151,7 @@ exports.adminScoreboard = function(req, gres) {
 
 exports.getUserPosition = function (req, gres) {
   User.find({'role':'user'}, 'name _id numSolved lastSolvedAt')
-  .sort({numSolved:-1, lastSolvedAt:1})
+  .sort({numSolved: -1, lastSolvedAt: 1})
   .exec(function (err, users) {
     users.some(function (user, index) {
       if(user._id.equals(req.user._id)) {

@@ -63,6 +63,7 @@ function removeEntity(res) {
 // Gets a list of Questions
 exports.index = function(req, res) {
   Question.findAsync()
+    .sort({_id: 1})
     .then(responseWithResult(res))
     .catch(handleError(res));
 };
