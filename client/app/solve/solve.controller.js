@@ -17,6 +17,8 @@ angular.module('tidbitsApp')
 	  		  	$(".nnq").show();
 	  		  } else {
 	  		    $scope.nextQuestion = res.data.question;
+            $scope.nextQuestionHints = res.data.hints;
+            $scope.nextQuestionDisplayHints = res.data.displayHints;
 	  		    $scope.nextQuestionID = res.data._id;
 	  		  }
 	  		});

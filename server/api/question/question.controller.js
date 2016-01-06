@@ -15,14 +15,14 @@ var User = require('../user/user.model');
 
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
-  return function(err) {
+  return function (err) {
     res.status(statusCode).send(err);
   };
 }
 
 function responseWithResult(res, statusCode) {
   statusCode = statusCode || 200;
-  return function(entity) {
+  return function (entity) {
     if (entity) {
       res.status(statusCode).json(entity);
     }
@@ -30,7 +30,7 @@ function responseWithResult(res, statusCode) {
 }
 
 function handleEntityNotFound(res) {
-  return function(entity) {
+  return function (entity) {
     if (!entity) {
       res.status(404).end();
       return null;
@@ -40,17 +40,17 @@ function handleEntityNotFound(res) {
 }
 
 function saveUpdates(updates) {
-  return function(entity) {
+  return function (entity) {
     var updated = _.merge(entity, updates);
     return updated.saveAsync()
-      .spread(function(updated) {
+      .spread(function (updated) {
         return updated;
       });
   };
 }
 
 function removeEntity(res) {
-  return function(entity) {
+  return function (entity) {
     if (entity) {
       return entity.removeAsync()
         .then(function() {
@@ -82,18 +82,19 @@ exports.show = function(req, res) {
 
 // Creates a new Question in the DB
 exports.create = function(req, res) {
-  Question.findAsync().then(function(res) {
-    var last=null;
+  Question.findAsync().then(function (res) {
+    var last = null;
     console.log(res);
-    if(res.length>0)
-      last=res[res.length-1];
+    if(res.length>0) {
+      last = res[res.length-1];
+    }
     console.log(last);
     Question.createAsync(req.body)
-      .then(function(res2) {
+      .then(function (res2) {
         console.log(req.body);
         if(last!=null) {
           delete last._id;
-          last.next=res2._id;
+          last.next = res2._id;
           Question.findByIdAsync(last._id)
           .then(handleEntityNotFound(res2))
           .then(saveUpdates(last));
@@ -120,15 +121,15 @@ exports.update = function(req, res) {
 // Deletes a Question from the DB
 exports.destroy = function(req, gres) {
   Question.findByIdAsync(req.params.id)
-    .then(function(res) {
-      Question.findOneAsync({next: req.params.id}).then(function(qres) {
+    .then(function (res) {
+      Question.findOneAsync({next: req.params.id}).then(function (qres) {
         var updated = _.assign(qres, {next: res.next});
         updated.save(function (err) {
           if (err) { return gres.send(500); }
           return;
         });
       });
-      User.findOneAsync({solved: req.params.id}).then(function(ures) {
+      User.findOneAsync({solved: req.params.id}).then(function (ures) {
         ures.solved.splice(ures.solved.indexOf(req.params.id), 1);
         var updated = _.assign(ures, {solved: ures.solved, numSolved: ures.numSolved-1});
         updated.save(function (err) {
@@ -145,15 +146,23 @@ exports.destroy = function(req, gres) {
 };
 
 exports.nextQ = function(req, gres) {
-  User.findById(req.user._id).populate('solved', 'next').then(function(res) {
+  User.findById(req.user._id).populate('solved', 'next').then(function (res) {
     if(res.solved.length==0) {
-      Question.findOne({}, '-answer').then(function(actres) {
+      Question.findOne({}, '-answer').then(function (actres) {
+        if(!actres.displayHints) {
+          actres.hints = '';
+        }
         gres.status(200).send(actres);
       });
     } else {
-      Question.findById(res.solved[res.solved.length-1].next).select('-answer').then(function(actres) {
-        gres.status(200).send(actres);
-      });
+      Question.findById(res.solved[res.solved.length-1].next)
+        .select('-answer')
+        .then(function (actres) {
+          if(!actres.displayHints) {
+            actres.hints = '';
+          }
+          gres.status(200).send(actres);
+        });
     }
   });
 };

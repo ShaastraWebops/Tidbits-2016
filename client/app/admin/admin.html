@@ -10,11 +10,18 @@
 		  		Answer: <input type="text" ng-model="newQA" name="answer" placeholder="Answer" id="answer" class="form-control input-sm">
 		  	</div>
 		  	<div class="col-xs-10">
-		  		Markdown Question: <textarea ng-model="newQQ" style="min-height: 250px;" name="question" id="question" class="form-control input-sm question"></textarea>
+		  		Markdown Question: <textarea ng-model="newQQ" style="min-height: 250px;" name="question" placeholder="Question" id="question" class="form-control input-sm question"></textarea>
 		  	</div>
 		  	<div class="col-xs-10">
 			  	<p><u>Converted Question:</u></p>
 			  	<div class="col-xs-10" v-html="input | marked" ng-bind-html="xmark(newQQ)" style="padding-left: 16px"></div><br /><br />
+		  	</div>
+		  	<div class="col-xs-10">
+		  		Markdown Hint(s): <textarea ng-model="newQH" style="min-height: 150px;" name="hints" placeholder="Hint(s)" id="hints" class="form-control input-sm question"></textarea>
+		  	</div>
+		  	<div class="col-xs-10">
+			  	<p><u>Converted Hint(s):</u></p>
+			  	<div class="col-xs-10" v-html="input | marked" ng-bind-html="xmark(newQH)" style="padding-left: 16px"></div><br /><br />
 		  	</div>
 	      <div>
 	      	<button class="btn btn-inverse btn-sm btn-login" type="submit">Save</button>
@@ -26,7 +33,7 @@
 		<div class="col-xs-6">
 			<p><b>Current set of questions</b></p>
 		  <ul class="list-group">
-		    <li class="list-group-item" ng-repeat="question in questions">
+		    <li class="list-group-item" ng-repeat="question in questions track by $index">
 	        <a ng-click="delete(question._id)"><span class="glyphicon glyphicon-trash pull-right"></span></a>
 	        <div class='ne_{{question._id}}'>
 	        	<div v-html="input | marked" ng-bind-html="xmark(question.question)"></div>
@@ -34,13 +41,21 @@
 	        	<div class='ne_{{question._id}} ne'>
 	        		<a ng-click="edit(question._id)"><span class="glyphicon glyphicon-pencil pull-right"></span></a>
 	        	</div>
-		        <span class="text-muted">{{question.answer}}</span>
+		        <b>Answer: </b><span class="text-muted">{{question.answer}}</span>
+		        <br />
+	        	<b>Hint(s): </b><span class="text-muted"><span v-html="input | marked" ng-bind-html="xmark(question.hints)"></span></span>
+						<div class="checkbox">
+					    <label>
+					      <input type="checkbox" ng-model="question.displayHints" ng-click="toggleHints(question)"> Show Hint(s) (Tick if yes)
+					    </label>
+						</div>
 		      </div>
 	        <div class='ye_{{question._id}}' style="display:none">
 	        	<div class="col-xs-7">
-	    				<div style="padding-top: 4px;">
-	        			<textarea ng-model='question.newQ' style="min-height: 250px;" class="form-control input-sm question"></textarea>
-	        			<input type="text" ng-model='question.newA' class="form-control input-sm">
+	    				<div>
+	        			<textarea ng-model='question.newQ' style="min-height: 250px;" placeholder="Question" class="form-control input-sm question"></textarea>
+	        			<textarea ng-model='question.newH' style="min-height: 125px;" placeholder="Hint(s)" class="form-control input-sm question"></textarea>
+	        			<input type="text" ng-model='question.newA' placeholder="Answer" class="form-control input-sm">
 	        		</div>
 	        	</div>
 		        <br />
