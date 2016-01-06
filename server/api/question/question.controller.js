@@ -82,7 +82,7 @@ exports.show = function(req, res) {
 
 // Creates a new Question in the DB
 exports.create = function(req, res) {
-  Question.findAsync().then(function (res) {
+  Question.findAsync({next: null}).then(function (res) {
     var last = null;
     console.log(res);
     if(res.length>0) {
@@ -149,17 +149,21 @@ exports.nextQ = function(req, gres) {
   User.findById(req.user._id).populate('solved', 'next').then(function (res) {
     if(res.solved.length==0) {
       Question.findOne({}, '-answer').then(function (actres) {
-        if(!actres.displayHints) {
-          actres.hints = '';
-        }
+          if(actres != null) {
+            if(!actres.displayHints) {
+              actres.hints = '';
+            }
+          }
         gres.status(200).send(actres);
       });
     } else {
       Question.findById(res.solved[res.solved.length-1].next)
         .select('-answer')
         .then(function (actres) {
-          if(!actres.displayHints) {
-            actres.hints = '';
+          if(actres != null) {
+            if(!actres.displayHints) {
+              actres.hints = '';
+            }
           }
           gres.status(200).send(actres);
         });

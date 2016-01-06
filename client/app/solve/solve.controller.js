@@ -11,7 +11,7 @@ angular.module('tidbitsApp')
   	$scope.refresh = function () {
 	  	$http.get('/api/users/me').then(function (res) {
 	  		$scope.solvedQuestions=res.data.solved;
-	  		$http.get('/api/questions/next').then(function (res) {
+	  		$http.get('/api/questions/next/').then(function (res) {
 	  		  if(res.data == "") {
 	  		  	$(".nq").hide();
 	  		  	$(".nnq").show();

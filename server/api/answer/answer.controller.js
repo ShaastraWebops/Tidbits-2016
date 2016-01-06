@@ -16,25 +16,30 @@ var User = require('../user/user.model');
 
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
-  return function(err) {
+  return function (err) {
     res.status(statusCode).send(err);
   };
 }
 
 function saveUpdates(updates) {
-  return function(entity) {
+  return function (entity) {
     var updated = _.merge(entity, updates);
     return updated.saveAsync()
-      .spread(function(updated) {
+      .spread(function (updated) {
         return updated;
       });
   };
 }
 
 exports.verify = function(req, res) {
-  User.findById(req.user._id, function(err, user) {
-    Question.findById(req.params.id, function(err, q) {
-      if(q.answer.toLowerCase()==req.body.answer.toLowerCase()) {
+  User.findById(req.user._id, function (err, user) {
+    Question.findById(req.params.id, function (err, q) {
+      q.answer = q.answer.toLowerCase();
+      req.body.answer = req.body.answer.toLowerCase();
+      var answers = q.answer.split(',');
+      console.log(answers);
+      // if(q.answer.toLowerCase()==req.body.answer.toLowerCase()) {
+      if(answers.indexOf(req.body.answer) >= 0) {
         if(user.solved.indexOf(req.params.id)==-1) {
           var updated = _.assign(user, {solved: user.solved.concat(req.params.id), numSolved: user.numSolved+1});
           updated.lastSolvedAt = Date.now();
