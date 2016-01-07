@@ -2,7 +2,12 @@
 <div class="container">
 	<div class="col-xs-12">
 		<h3>Admin Leaderboard ({{ totalRegistrations }} registrations so far)</h3>
-		<table class="table table-bordered table-hover">
+
+    <button class="btn btn-link" ng-click="exportToExcel('#adminLeaderboardTable')">
+      <span class="glyphicon glyphicon-share"></span> Export to Excel
+    </button>
+
+		<table class="table table-bordered table-hover" id="adminLeaderboardTable">
 			<thead>
 				<tr>
 					<th>Position</th>
