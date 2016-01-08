@@ -39,7 +39,7 @@ exports.verify = function(req, res) {
       var answers = q.answer.split(',');
       console.log(answers);
       // if(q.answer.toLowerCase()==req.body.answer.toLowerCase()) {
-      if(answers.indexOf(req.body.answer) >= 0) {
+      if(!user.disqualified && answers.indexOf(req.body.answer) >= 0) {
         if(user.solved.indexOf(req.params.id)==-1) {
           var updated = _.assign(user, {solved: user.solved.concat(req.params.id), numSolved: user.numSolved+1});
           updated.lastSolvedAt = Date.now();

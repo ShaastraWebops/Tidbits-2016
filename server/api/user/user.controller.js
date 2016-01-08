@@ -133,7 +133,7 @@ exports.authCallback = function(req, res, next) {
 };
 
 exports.scoreboard = function(req, gres) {
-  User.find({'role':'user'}, 'name _id numSolved lastSolvedAt')
+  User.find({'role':'user', $or:[ { 'disqualified':{$exists: false} }, { 'disqualified':false } ]}, 'name _id numSolved lastSolvedAt')
   .sort({numSolved: -1, lastSolvedAt: 1})
   .limit(20)
   .exec(function (err, res) {
@@ -142,15 +142,20 @@ exports.scoreboard = function(req, gres) {
 };
 
 exports.adminScoreboard = function(req, gres) {
-  User.find({'role':'user'}, 'name _id numSolved lastSolvedAt email phoneNumber')
+  User.find({'role':'user', $or:[ { 'disqualified':{$exists: false} }, { 'disqualified':false } ]}, 'name _id numSolved lastSolvedAt email phoneNumber disqualified')
   .sort({numSolved: -1, lastSolvedAt: 1})
-  .exec(function (err, res) {
-    gres.status(200).send(res);
+  .exec(function (err, res_one) {
+    User.find({'role':'user', 'disqualified':true }, 'name _id numSolved lastSolvedAt email phoneNumber disqualified')
+    .sort({numSolved: -1, lastSolvedAt: 1})
+    .exec(function (err, res_two) {
+      var actres = res_one.concat(res_two);
+      gres.status(200).send(actres);
+    });
   });
 };
 
 exports.getUserPosition = function (req, gres) {
-  User.find({'role':'user'}, 'name _id numSolved lastSolvedAt')
+  User.find({'role':'user', $or:[ { 'disqualified':{$exists: false} }, { 'disqualified':false } ]})
   .sort({numSolved: -1, lastSolvedAt: 1})
   .exec(function (err, users) {
     users.some(function (user, index) {
@@ -160,4 +165,16 @@ exports.getUserPosition = function (req, gres) {
       }
     });
   });  
+};
+
+exports.toggleQualification = function (req, res) {
+  User.findByIdAsync(req.params.id)
+    .then(function (user) {
+      user.disqualified = !user.disqualified;
+      return user.saveAsync()
+        .then(function() {
+          res.status(204).end();
+        })
+        .catch(validationError(res));      
+    });
 };

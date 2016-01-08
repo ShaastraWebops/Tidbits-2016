@@ -10,6 +10,7 @@ angular.module('tidbitsApp')
 
   	$scope.refresh = function () {
 	  	$http.get('/api/users/me').then(function (res) {
+        $scope.disqualified = res.data.disqualified;
 	  		$scope.solvedQuestions=res.data.solved;
 	  		$http.get('/api/questions/next/').then(function (res) {
 	  		  if(res.data == "") {

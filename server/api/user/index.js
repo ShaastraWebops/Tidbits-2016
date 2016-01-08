@@ -12,6 +12,7 @@ router.get('/me', auth.isAuthenticated(), controller.me);
 router.get('/leaders/', controller.scoreboard);
 router.get('/adminLeaders/', auth.hasRole('admin'), controller.adminScoreboard);
 router.get('/currUserPosition/', auth.isAuthenticated(), controller.getUserPosition);
+router.put('/toggleQualification/:id', auth.hasRole('admin'), controller.toggleQualification);
 router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 router.post('/', controller.create);

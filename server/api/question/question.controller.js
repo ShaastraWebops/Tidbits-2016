@@ -147,26 +147,32 @@ exports.destroy = function(req, gres) {
 
 exports.nextQ = function(req, gres) {
   User.findById(req.user._id).populate('solved', 'next').then(function (res) {
-    if(res.solved.length==0) {
-      Question.findOne({}, '-answer').then(function (actres) {
-          if(actres != null) {
-            if(!actres.displayHints) {
-              actres.hints = '';
+    if(!res.disqualified) {
+      if(res.solved.length==0) {
+        Question.find({}, '-answer')
+          .sort({_id: 1})
+          .then(function (actres) {
+            if(actres.length != 0) {
+              if(!actres[0].displayHints) {
+                actres[0].hints = '';
+              }
             }
-          }
-        gres.status(200).send(actres);
-      });
-    } else {
-      Question.findById(res.solved[res.solved.length-1].next)
-        .select('-answer')
-        .then(function (actres) {
-          if(actres != null) {
-            if(!actres.displayHints) {
-              actres.hints = '';
-            }
-          }
-          gres.status(200).send(actres);
+            gres.status(200).send(actres[0]);
         });
-    }
+      } else {
+        Question.findById(res.solved[res.solved.length-1].next)
+          .select('-answer')
+          .then(function (actres) {
+            if(actres != null) {
+              if(!actres.displayHints) {
+                actres.hints = '';
+              }
+            }
+            gres.status(200).send(actres);
+          });
+      }
+    } else {
+      gres.status(200).send(null);
+    } 
   });
 };

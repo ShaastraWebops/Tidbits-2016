@@ -7,6 +7,15 @@ angular.module('tidbitsApp')
       $scope.users = res.data;
     });
 
+    $scope.toggleQualification = function (userId, index) {
+      $http.put('/api/users/toggleQualification/' + userId)
+        .then(function (response) {
+          if(response.status == 204) {
+            $scope.users[index].disqualified = !$scope.users[index].disqualified;
+          }
+        });
+    };
+
     $scope.exportToExcel = function (tableId) {
       $scope.exportHref = ExcelDownloader.tableToExcel(tableId, 'sheet name');
       $timeout(function () {
