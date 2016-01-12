@@ -94,6 +94,26 @@ UserSchema
       });
   }, 'The specified email address is already in use.');
 
+// Validate phoneNumber is not taken
+UserSchema
+  .path('phoneNumber')
+  .validate(function(value, respond) {
+    var self = this;
+    return this.constructor.findOneAsync({ phoneNumber: value })
+      .then(function(user) {
+        if (user) {
+          if (self.id === user.id) {
+            return respond(true);
+          }
+          return respond(false);
+        }
+        return respond(true);
+      })
+      .catch(function(err) {
+        throw err;
+      });
+  }, 'The specified phone number is already in use.');
+
 var validatePresenceOf = function(value) {
   return value && value.length;
 };
