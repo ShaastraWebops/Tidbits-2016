@@ -13,7 +13,6 @@ angular.module('tidbitsApp')
         $scope.disqualified = res.data.disqualified;
 	  		$scope.solvedQuestions = res.data.solved;
 	  		$http.get('/api/questions/next/').then(function (res) {
-          console.log(res.data);
 	  		  if(res.data == "") {
 	  		  	$(".nq").hide();
 	  		  	$(".nnq").show();
