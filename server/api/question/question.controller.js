@@ -65,7 +65,7 @@ exports.index = function(req, res) {
   // Question.findAsync()
   //   .then(responseWithResult(res))
   //   .catch(handleError(res));
-  Question.find({})
+  Question.find({}, '-answer -hints')
     .sort({_id: 1})
     .execAsync()
     .then(responseWithResult(res))
@@ -74,7 +74,7 @@ exports.index = function(req, res) {
 
 // Gets a single Question from the DB
 exports.show = function(req, res) {
-  Question.findByIdAsync(req.params.id)
+  Question.findByIdAsync(req.params.id, '-answer -hints')
     .then(handleEntityNotFound(res))
     .then(responseWithResult(res))
     .catch(handleError(res));
